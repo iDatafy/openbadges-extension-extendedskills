@@ -1,17 +1,7 @@
 {
   "@context": {
     "@protected": true,
-    "id": "@id",
-    "type": "@type",
-    "ExtendedAlignment": {
-      "@id": "https://skybridgeskills.github.io/ob-ext-extendedskills#ExtendedAlignment",
-      "@context": {
-        "@protected": true,
-        "id": "@id",
-        "type": "@type",
-        "targetCategory": "https://skybridgeskills.github.io/ob-ext-extendedskills#targetCategory",
-        "targetLevel": "https://skybridgeskills.github.io/ob-ext-extendedskills#targetLevel"
-      }
-    }
+    "targetCategory": "https://skybridgeskills.github.io/openbadges-extension-extendedskills#targetCategory",
+    "targetLevel": "https://skybridgeskills.github.io/openbadges-extension-extendedskills#targetLevel"
   }
 }
