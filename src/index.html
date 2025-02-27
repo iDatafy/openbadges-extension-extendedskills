@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <!-- <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script> -->
+  <script src="./respec-lite.js" class="remove" defer></script>
+  <title>Open Badges Extended Skill Alignments Extension</title>
+  <script class="remove">
+    const currentUrl = new URL(window.location.href);
+    const baseUrl = currentUrl.protocol + "//" + currentUrl.host + currentUrl.pathname;
+    var respecConfig = {
+      specStatus: "base",
+      edDraftURI: null,
+      specDate: "February 26, 2025",
+      specNature: "normative",
+      // specStatus: "unofficial",
+      latestVersion: currentUrl,
+      specVersion: "1.0",
+      license: "cc-by",
+      logos: [{
+        src: "./SmartResumeLogo.svg",
+        url: "https://smartresume.com",
+        alt: "SmartResume Logo",
+        width: 200,
+        height: 32
+      }],
+      editors: [
+        { name: "Nate Otto", company: "Skybridge Skills (USA)", companyUrl: "https://skybridgeskills.com" },
+        { name: "Andy Griebel", company: "iDatafy / SmartResume (USA)", companyUrl: "https://idatafy.com" },
+        { name: "Keith Hackett", company: "iDatafy / SmartResume (USA)", companyUrl: "https://idatafy.com" }
+      ],
+      github: {
+        repoURL: "https://github.com/skybridgeskills/openbadges-extension-extendedskills",
+        branch: "main"
+      },
+      noTOC: true,
+      localBiblio: {
+        SCHEMA: {
+          title: "JSON Schema",
+          href: "./schema.json",
+        },
+        CONTEXT: {
+          title: "JSON-LD Context",
+          href: "./v1.json",
+        },
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>This repository contains an Open Badges 3.0 extension that enables issuers to include
+      category and level information related to skills alignments in a lightweight way.</p>
+  </section>
+
+  <section class="informative" id="usecases">
+    <h3>Use cases</h3>
+    <ul>
+      <li>Identify the level of achievement to which an Achievement aligns, from an understood set
+        of levels.</li>
+      <li>Define a textual category within which the Alignment falls.</li>
+    </ul>
+
+    <p>The extension properties may be used within any <a
+        href="https://www.imsglobal.org/spec/ob/v3p0/#org.1edtech.ob.v3p0.alignment.class"><code>Alignment</code></a>
+      entity, which is an Open Badges and CLR data model entity that may optionally appear within an
+      <a
+        href="https://www.imsglobal.org/spec/ob/v3p0/#org.1edtech.ob.v3p0.achievement.class"><code>Achievement</code></a>,
+      a <a
+        href="https://www.imsglobal.org/spec/ob/v3p0/#org.1edtech.ob.v3p0.result.class"><code>Result</code></a>,
+      or a
+      <a
+        href="https://www.imsglobal.org/spec/ob/v3p0/#org.1edtech.ob.v3p0.resultdescription.class"><code>ResultDescription</code></a>.
+    </p>
+  </section>
+
+  <section id="documentset">
+    <h3>Document Set</h3>
+    <p>This Extension is made up of this documentation page, a JSON-LD Context file, and a
+      JSON-schema file. The context and the schema URLs are expected to be referenced from within
+      extended badges following the instructions found here.</p>
+    <dl>
+      <dt>JSON Schema</dt>
+      <dd>The JSON Schema defines the syntactical restrictions of this
+        extension. <a href="./schema.json"><code>{{baseUrl}}schema.json</code></a>
+      </dd>
+      <dt>JSON-LD Context</dt>
+      <dd>The JSON-LD context defines mappings for the terms used in this specification to their
+        canonical IRIs
+        <a href="./v1.json">{{baseUrl}}v1.json</code></a>
+      </dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Implementation</h2>
+    <p>The extension offers two additional optional properties, <code>targetCategory</code> and
+      <code>targetLevel</code> to apply to any instances of the Alignment class, which may appear
+      within <code>Achievement</code>, <code>Result</code>, or
+      <code>ResultDescription</code> entities. In order to use the extension, place the following
+      properties within the identified entities.
+    </p>
+
+    <p>
+      This extension uses the Verifiable Credentials <code>credentialSchema</code> validation method
+      to ensure syntactical consistency across implementations, using <a
+        href="https://www.imsglobal.org/spec/vccs/v1p0/">
+        <code>1EdTechJsonSchemavalidator2019</code>
+      </a>.
+    </p>
+
+    <table class="data">
+      <tr>
+        <th>Class</th>
+        <th>Property</th>
+        <th>Instructions</th>
+      </tr>
+      <tr>
+        <td><code>Alignment</code></td>
+        <td>targetCategory</td>
+        <td>
+          A string value that represents the category to which the Alignment corresponds. (optional)
+        </td>
+      </tr>
+      <tr>
+        <td><code>Alignment</code></td>
+        <td>targetLevel</td>
+        <td>
+          A string value that represents the level of achievement to which the Alignment aligns.
+          (optional)
+        </td>
+      </tr>
+      <tr>
+        <td><code>AchievementCredential</code>, <code>OpenBadgeCredential</code></td>
+        <td>@context</td>
+        <td>
+          The <a href="https://www.imsglobal.org/spec/ob/v3p0/#org.1edtech.ob.v3p0.context.class">
+            <code>Context</code> </a> for the Verifiable Credential (required). The value of the
+          <code>@context</code> property MUST be an ordered set where the first item is a URI of a
+          Verifiable Credentials Data Model context, such as
+          <code>"https://www.w3.org/ns/credentials/v2"</code>, and the second item is a URI of a
+          valid Open Badges context version, such as
+          <code>"https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"</code>. The
+          extension context IRI <code>{{baseUrl}}v1.json</code> MUST
+          appear subsequently.
+        </td>
+      </tr>
+      <tr>
+        <td><code>AchievementCredential</code>, <code>OpenBadgeCredential</code></td>
+        <td>credentialSchema</td>
+        <td>
+          The value of the <code>credentialSchema</code> property MUST be an ordered set that
+          includes the schema-based validator of type
+          <code>1EdTechJsonSchemaValidator2019</code> for this extension.
+        </td>
+      </tr>
+      <tr>
+        <td><code>1EdTechJsonSchemaValidator2019</code></td>
+        <td>type</td>
+        <td>
+          The value of the <code>credentialSchema.type</code> property MUST be the string
+          <code>1EdTechJsonSchemaValidator2019</code>.
+        </td>
+      </tr>
+      <tr>
+        <td><code>1EdTechJsonSchemaValidator2019</code></td>
+        <td>id</td>
+        <td>
+          The <code>id</code> property MUST be the URI
+          <code>{{baseUrl}}schema.json</code> that points to the
+          schema file for this extension, so that verifiers can check that your credential has
+          implemented the extension fields in the correct location.
+        </td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="appendix">
+    <h2>Examples</h2>
+    <section>
+      <h3>A Badge with extended Achievement Alignment</h3>
+      <p>
+        The following example shows an OpenBadgeCredential with an Achievement that includes a
+        targetCategory and targetLevel in its alignment.
+      </p>
+      <figure class="example">
+        <pre class="scroll json"><code>
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json",
+    "{{baseUrl}}v1.json"
+  ],
+  "id": "urn:uuid:d3e5aeaf-ea53-4a31-a9ed-ecf7a1343193",
+  "type": ["VerifiableCredential","OpenBadgeCredential"],
+  "issuer": {
+    "id": "did:key:z6MkqQ7h8Gq8Zq6Q7Y8",
+    "type": [
+      "Profile"
+    ],
+    "name": "Example Skills Academy"
+  },
+  "validFrom": "2025-01-01T00:00:00Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "type": [
+      "AchievementSubject"
+    ],
+    "achievement": {
+      "id": "urn:uuid:e53b5964-4b19-4f9f-ae91-d42191ae1e14",
+      "type": ["Achievement"],
+      "name": "Brain Stormer",
+      "criteria": {
+        "narrative": "This badge is recognized when at least two colleagues observe individual's ability to..."
+      },
+      "description": "This badge recognizes the development of the capacity to apply brainstorming techniques...",
+      "alignment": [
+        {
+          "targetUrl": "https://skills.emsidata.com/skills/KS122HN7559WPNWPMDML",
+          "targetName": "Creative Thinking",
+          "targetDescription": "Creative thinking is a skill that involves generating unique ideas...",
+          "targetLevel": "Intermediate",
+          "targetCategory": "Durable Skills"
+        }
+      ]
+    }
+  },
+  "credentialSchema": [{
+    "id": "{{baseUrl}}schema.json",
+    "type": "1EdTechJsonSchemaValidator2019"
+  }]
+}
+          </code></pre>
+        <figcaption>Example of an OpenBadgeCredential extended with alignment category and level.
+        </figcaption>
+      </figure>
+    </section>
+
+  </section>
+
+  <section class="appendix informative" id="revision-history">
+    <h2>Revision History</h2>
+
+    <table title="Revision History" class="data" summary="Publication history and revision details
+    for this extension.">
+      <thead>
+        <tr>
+          <th>Version No.</th>
+          <th>Release Date</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Editor's Initial Draft</td>
+          <td>February 26, 2025</td>
+          <td>Release as public document.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    // This could be removed once a canonical location for this extension is established, and the 
+    // actual URLs can be hardcoded. This is intended to run after the page has been parsed, but
+    // before the respec script is processed.
+
+    document.body.innerHTML = document.body.innerHTML.replace(/\{\{baseUrl\}\}/g, baseUrl);
+  </script>
+</body>
+
+</html>

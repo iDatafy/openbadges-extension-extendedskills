@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "achievement": {
+          "type": "object",
+          "properties": {
+            "alignment": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ExtendedAlignment"
+              }
+            },
+            "resultDescription": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ObjectWithExtendedAlignment"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObjectWithExtendedAlignment"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "ExtendedAlignment": {
+      "type": "object",
+      "properties": {
+        "targetLevel": {
+          "type": "string"
+        },
+        "targetCategory": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ObjectWithExtendedAlignment": {
+      "type": "object",
+      "properties": {
+        "alignment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExtendedAlignment"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

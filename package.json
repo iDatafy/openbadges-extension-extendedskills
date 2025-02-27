@@ -1,0 +1,23 @@
+{
+  "name": "openbadges-extension-extendedskills",
+  "version": "0.1.0",
+  "description": "An Open Badges 3.0 extension that enables issuers to include category and level information related to skills alignments in a lightweight way.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skybridgeskills/openbadges-extension-extendedskills.git"
+  },
+  "keywords": [
+    "openbadges",
+    "extension"
+  ],
+  "author": "Nate Otto",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/skybridgeskills/openbadges-extension-extendedskills/issues"
+  },
+  "homepage": "https://github.com/skybridgeskills/openbadges-extension-extendedskills#readme"
+}
