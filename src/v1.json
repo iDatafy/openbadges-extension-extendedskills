@@ -1,7 +1,13 @@
 {
   "@context": {
     "@protected": true,
-    "targetCategory": "https://skybridgeskills.github.io/openbadges-extension-extendedskills#targetCategory",
-    "targetLevel": "https://skybridgeskills.github.io/openbadges-extension-extendedskills#targetLevel"
+    "ExtendedAlignment": {
+      "@id": "https://idatafy.github.io/openbadges-extension-extendedskills#ExtendedAlignment",
+      "@context": {
+        "@protected": true,
+        "targetCategory": "https://idatafy.github.io/openbadges-extension-extendedskills#targetCategory",
+        "targetLevel": "https://idatafy.github.io/openbadges-extension-extendedskills#targetLevel"
+      }
+    }
   }
 }

@@ -15,19 +15,13 @@
               }
             },
             "resultDescription": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/ObjectWithExtendedAlignment"
-              }
+              "$ref": "#/$defs/ObjectWithExtendedAlignment"
             }
           },
           "additionalProperties": true
         },
         "result": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/ObjectWithExtendedAlignment"
-          }
+          "$ref": "#/$defs/ObjectWithExtendedAlignment"
         }
       },
       "additionalProperties": true
@@ -38,14 +32,51 @@
     "ExtendedAlignment": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "array",
+          "contains": {
+            "const": "Alignment"
+          },
+          "additionalItems": {
+            "type": "string"
+          }
+        },
         "targetLevel": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Beginner",
+            "Intermediate",
+            "Advanced",
+            "Expert"
+          ]
         },
         "targetCategory": {
           "type": "string"
         }
       },
-      "additionalProperties": true
+      "required": [
+        "type"
+      ],
+      "additionalProperties": true,
+      "dependentSchemas": {
+        "targetLevel": {
+          "$ref": "#/$defs/TypeFieldHasExtendedAlignment"
+        },
+        "targetCategory": {
+          "$ref": "#/$defs/TypeFieldHasExtendedAlignment"
+        }
+      }
+    },
+    "TypeFieldHasExtendedAlignment": {
+      "description": "If one of the extension properties is used the adjacent type field must contain the value 'ExtendedAlignment'.",
+      "properties": {
+        "type": {
+          "type": "array",
+          "contains": {
+            "const": "ExtendedAlignment"
+          }
+        }
+      }
     },
     "ObjectWithExtendedAlignment": {
       "type": "object",

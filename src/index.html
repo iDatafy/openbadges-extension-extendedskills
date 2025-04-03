@@ -8,7 +8,6 @@
   <title>Open Badges Extended Skill Alignments Extension</title>
   <script class="remove">
     const currentUrl = new URL(window.location.href);
-    const baseUrl = currentUrl.protocol + "//" + currentUrl.host + currentUrl.pathname;
     var respecConfig = {
       specStatus: "base",
       edDraftURI: null,
@@ -32,7 +31,7 @@
         { name: "Keith Hackett", company: "iDatafy / SmartResume (USA)", companyUrl: "https://idatafy.com" }
       ],
       github: {
-        repoURL: "https://github.com/skybridgeskills/openbadges-extension-extendedskills",
+        repoURL: "https://github.com/idatafy/openbadges-extension-extendedskills",
         branch: "main"
       },
       noTOC: true,
@@ -67,7 +66,7 @@
     <h3>Use cases</h3>
     <ul>
       <li>Identify the level of achievement to which an Achievement aligns, from an understood set
-        of levels.</li>
+        of levels: Beginner, Intermediate, Advanced, and Expert.</li>
       <li>Define a textual category within which the Alignment falls.</li>
     </ul>
 
@@ -88,16 +87,18 @@
     <h3>Document Set</h3>
     <p>This Extension is made up of this documentation page, a JSON-LD Context file, and a
       JSON-schema file. The context and the schema URLs are expected to be referenced from within
-      extended badges following the instructions found here.</p>
+      extended badges2 following the instructions found here.</p>
     <dl>
       <dt>JSON Schema</dt>
       <dd>The JSON Schema defines the syntactical restrictions of this
-        extension. <a href="./schema.json"><code>{{baseUrl}}schema.json</code></a>
+        extension. <a
+          href="./schema.json"><code>https://idatafy.github.com/openbadges-extension-extendedskills/schema.json</code></a>
       </dd>
       <dt>JSON-LD Context</dt>
       <dd>The JSON-LD context defines mappings for the terms used in this specification to their
         canonical IRIs
-        <a href="./v1.json">{{baseUrl}}v1.json</code></a>
+        <a
+          href="./v1.json">https://idatafy.github.com/openbadges-extension-extendedskills/v1.json</code></a>
       </dd>
     </dl>
   </section>
@@ -106,9 +107,11 @@
     <h2>Implementation</h2>
     <p>The extension offers two additional optional properties, <code>targetCategory</code> and
       <code>targetLevel</code> to apply to any instances of the Alignment class, which may appear
-      within <code>Achievement</code>, <code>Result</code>, or
-      <code>ResultDescription</code> entities. In order to use the extension, place the following
-      properties within the identified entities.
+      within <code>Achievement</code>, <code>Result</code>, or <code>ResultDescription</code>
+      entities. In order to use the extension, add the additional class name
+      <code>ExtendedAlignment</code> to the <code>type</code> array in addition to
+      <code>Alignment</code> and place the following properties within the same object alongside the
+      existing properties from <code>Alignment</code>.
     </p>
 
     <p>
@@ -127,17 +130,28 @@
       </tr>
       <tr>
         <td><code>Alignment</code></td>
-        <td>targetCategory</td>
+        <td>type</td>
         <td>
-          A string value that represents the category to which the Alignment corresponds. (optional)
+          An array of strings expressing the type(s) of the Alignment entity. In an extended entity,
+          the value MUST include both the original <code>Alignment</code> type and the extension
+          type <code>ExtendedAlignment</code>.
         </td>
       </tr>
       <tr>
-        <td><code>Alignment</code></td>
+        <td><code>ExtendedAlignment</code></td>
+        <td>targetCategory</td>
+        <td>
+          A string value that represents the category to which the Alignment corresponds (optional).
+        </td>
+      </tr>
+      <tr>
+        <td><code>ExtendedAlignment</code></td>
         <td>targetLevel</td>
         <td>
-          A string value that represents the level of achievement to which the Alignment aligns.
-          (optional)
+          The selected level of achievement to which the Alignment aligns (optional). If included,
+          the value MUST be one of the following: <code>Beginner</code>, <code>Intermediate</code>,
+          <code>Advanced</code>, or <code>Expert</code>.
+
         </td>
       </tr>
       <tr>
@@ -151,7 +165,8 @@
           <code>"https://www.w3.org/ns/credentials/v2"</code>, and the second item is a URI of a
           valid Open Badges context version, such as
           <code>"https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"</code>. The
-          extension context IRI <code>{{baseUrl}}v1.json</code> MUST
+          extension context IRI
+          <code>https://idatafy.github.com/openbadges-extension-extendedskills/v1.json</code> MUST
           appear subsequently.
         </td>
       </tr>
@@ -177,7 +192,8 @@
         <td>id</td>
         <td>
           The <code>id</code> property MUST be the URI
-          <code>{{baseUrl}}schema.json</code> that points to the
+          <code>https://idatafy.github.com/openbadges-extension-extendedskills/schema.json</code>
+          that points to the
           schema file for this extension, so that verifiers can check that your credential has
           implemented the extension fields in the correct location.
         </td>
@@ -191,7 +207,15 @@
       <h3>A Badge with extended Achievement Alignment</h3>
       <p>
         The following example shows an OpenBadgeCredential with an Achievement that includes a
-        targetCategory and targetLevel in its alignment.
+        <code>targetCategory</code> and <code>targetLevel</code> in its alignment. It also contains
+        a second Alignment that has not been extended and does not reference the
+        <code>ExtendedAlignment</code> type.
+      </p>
+
+      <p>
+        The typical purpose of including a skill in the Achievement alignment is to indicate that
+        all holders of badges for this Achievement have demonstrated the skill at the level
+        indicated by the <code>targetLevel</code> property.
       </p>
       <figure class="example">
         <pre class="scroll json"><code>
@@ -199,7 +223,7 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json",
-    "{{baseUrl}}v1.json"
+    "https://idatafy.github.com/openbadges-extension-extendedskills/v1.json"
   ],
   "id": "urn:uuid:d3e5aeaf-ea53-4a31-a9ed-ecf7a1343193",
   "type": ["VerifiableCredential","OpenBadgeCredential"],
@@ -226,23 +250,124 @@
       "description": "This badge recognizes the development of the capacity to apply brainstorming techniques...",
       "alignment": [
         {
-          "type": ["Alignment"],
+          "type": ["Alignment", "ExtendedAlignment"],
           "targetUrl": "https://skills.emsidata.com/skills/KS122HN7559WPNWPMDML",
           "targetName": "Creative Thinking",
           "targetDescription": "Creative thinking is a skill that involves generating unique ideas...",
           "targetLevel": "Intermediate",
           "targetCategory": "Durable Skills"
+        },
+        {
+          "type": ["Alignment"],
+          "targetUrl": "https://lightcast.io/open-skills/skills/KS7AASDV6UOE7VFBGF4D",
+          "targetName": "Collaboration",
+          "targetDescription": "Collaboration is the process of two or more people, entities or ...",
         }
       ]
     }
   },
   "credentialSchema": [{
-    "id": "{{baseUrl}}schema.json",
+    "id": "https://idatafy.github.com/openbadges-extension-extendedskills/schema.json",
     "type": "1EdTechJsonSchemaValidator2019"
   }]
 }
           </code></pre>
         <figcaption>Example of an OpenBadgeCredential extended with alignment category and level.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h3>A Badge with extended ResultDescription Alignment</h3>
+      <p>
+        The Open Badges and CLR specifications enable alignment beyond just the basic
+        <code>Achievement.alignment</code>The following example shows an OpenBadgeCredential with an
+        Achievement that includes a <code>targetCategory</code> and <code>targetLevel</code> in a
+        ResultDescription alignment showing an achieved level of a particular skill.
+      </p>
+
+      <p>
+        The typical purpose of including a skill in the Result or ResultDescription alignment is to
+        indicate that this specific learner performed at the <code>targetLevel</code> indicated.
+        Different learners may have different levels of achievement for the same skill. The
+        Achievement may be awarded to individuals who have demonstrated the skill at any level.
+      </p>
+      <figure class="example">
+        <pre class="scroll json"><code>
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json",
+    "https://idatafy.github.com/openbadges-extension-extendedskills/v1.json"
+  ],
+  "id": "urn:uuid:d3e5aeaf-ea53-4a31-a9ed-ecf7a1343193",
+  "type": [
+    "VerifiableCredential",
+    "OpenBadgeCredential"
+  ],
+  "issuer": {
+    "id": "did:key:z6MkqQ7h8Gq8Zq6Q7Y8",
+    "type": [
+      "Profile"
+    ],
+    "name": "Example Skills Academy"
+  },
+  "validFrom": "2025-01-01T00:00:00Z",
+  "credentialSubject": {
+    "id": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "type": [
+      "AchievementSubject"
+    ],
+    "achievement": {
+      "id": "urn:uuid:e53b5964-4b19-4f9f-ae91-d42191ae1e14",
+      "type": [
+        "Achievement"
+      ],
+      "name": "Brain Stormer",
+      "criteria": {
+        "narrative": "This badge is recognized when at least two colleagues observe individual's ability to..."
+      },
+      "description": "This badge recognizes the development of the capacity to apply brainstorming techniques...",
+      "resultDescription": {
+        "type": [
+          "ResultDescription"
+        ],
+        "id": "urn:uuid:c53b5964-6b19-7f9f-be91-l32191ae1e15",
+        "name": "Intermediate Creative Thinking Result",
+        "resultType": "Percent",
+        "alignment": [
+          {
+            "type": [
+              "Alignment",
+              "ExtendedAlignment"
+            ],
+            "targetUrl": "https://skills.emsidata.com/skills/KS122HN7559WPNWPMDML",
+            "targetName": "Creative Thinking",
+            "targetDescription": "Creative thinking is a skill that involves generating unique ideas...",
+            "targetLevel": "Intermediate",
+            "targetCategory": "Durable Skills"
+          }
+        ]
+      }
+    },
+    "result": {
+      "type": [
+        "Result"
+      ],
+      "resultDescription": "urn:uuid:c53b5964-6b19-7f9f-be91-l32191ae1e15",
+      "value": "85"
+    }
+  },
+  "credentialSchema": [
+    {
+      "id": "https://idatafy.github.com/openbadges-extension-extendedskills/schema.json",
+      "type": "1EdTechJsonSchemaValidator2019"
+    }
+  ]
+}
+          </code></pre>
+        <figcaption>Example of an OpenBadgeCredential extended with a ResultDescription with
+          alignment category and level.
         </figcaption>
       </figure>
     </section>
@@ -264,20 +389,12 @@
       <tbody>
         <tr>
           <td>Editor's Initial Draft</td>
-          <td>February 26, 2025</td>
+          <td>April 3, 2025</td>
           <td>Release as public document.</td>
         </tr>
       </tbody>
     </table>
   </section>
-
-  <script>
-    // This could be removed once a canonical location for this extension is established, and the 
-    // actual URLs can be hardcoded. This is intended to run after the page has been parsed, but
-    // before the respec script is processed.
-
-    document.body.innerHTML = document.body.innerHTML.replace(/\{\{baseUrl\}\}/g, baseUrl);
-  </script>
 </body>
 
 </html>
