@@ -122,6 +122,24 @@
       </a>.
     </p>
 
+    <p>Step-by-step instructions:</p>
+    <ol>
+      <li>Add the 1EdTech extensions context URL and this extension context URL to the credential
+        <code>@context</code> property.
+      </li>
+      <li>Identify which Alignment(s) you want to extend and add the <code>ExtendedAlignment</code>
+        to the type array.</li>
+      <li>If desired, add the <code>targetLevel</code> to the ExtendedAlignment entity. Choose a
+        value from
+        <code>Beginner</code>, <code>Intermediate</code>, <code>Advanced</code>, or
+        <code>Expert</code>.
+      </li>
+      <li>If desired, add the <code>targetCategory</code> properties to the ExtendedAlignment
+        entity. Choose a single relevant string value to express the category.</li>
+      <li>Reference the extension schema in the <code>credentialSchema</code> so that verifiers can
+        easily confirm that you have met the structural expectations of the extension.</li>
+    </ol>
+
     <table class="data">
       <tr>
         <th>Class</th>
@@ -167,7 +185,12 @@
           <code>"https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"</code>. The
           extension context IRI
           <code>https://idatafy.github.io/openbadges-extension-extendedskills/v1.json</code> MUST
-          appear subsequently.
+          appear subsequently. The 1EdTech Extensions context IRI
+          <code>https://purl.imsglobal.org/spec/ob/v3p0/extensions.json</code> SHOULD additionally
+          appear, which supports the usage of the <code>credentialSchema</code> type used in this
+          extension. It is redundantly defined in this extension context, but some non-JSON-LD
+          processors may rely on the presence of the extensions context to process schemas of this
+          type.
         </td>
       </tr>
       <tr>
@@ -223,6 +246,7 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json",
+    "https://purl.imsglobal.org/spec/ob/v3p0/extensions.json",
     "https://idatafy.github.io/openbadges-extension-extendedskills/v1.json"
   ],
   "id": "urn:uuid:d3e5aeaf-ea53-4a31-a9ed-ecf7a1343193",
@@ -298,6 +322,7 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2",
     "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json",
+    "https://purl.imsglobal.org/spec/ob/v3p0/extensions.json",
     "https://idatafy.github.io/openbadges-extension-extendedskills/v1.json"
   ],
   "id": "urn:uuid:d3e5aeaf-ea53-4a31-a9ed-ecf7a1343193",

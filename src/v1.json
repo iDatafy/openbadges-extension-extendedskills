@@ -1,6 +1,7 @@
 {
   "@context": {
     "@protected": true,
+    "1EdTechJsonSchemaValidator2019": "https://purl.imsglobal.org/spec/vccs/v1p0/context.json#1EdTechJsonSchemaValidator2019",
     "ExtendedAlignment": {
       "@id": "https://idatafy.github.io/openbadges-extension-extendedskills#ExtendedAlignment",
       "@context": {
